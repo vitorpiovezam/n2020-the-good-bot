@@ -18,6 +18,23 @@ class UserRepository {
         "type",
       ]
     );
+
+    List<User> itens = new List<User>();
+    for (Map i in result) {
+      itens.add(User.fromMap(i));
+    }
+
+    return itens;
+  }
+
+  Future<int> create(User item) async {
+    var connection = await _databaseHelper.connection;
+    var result = await connection.insert(
+      "Users",
+      item.toMap(),
+    );
+
+    return result;
   }
 
   Future<List<User>> findByCourseId(String id) async {
@@ -35,16 +52,6 @@ class UserRepository {
     } else {
       return null;
     }
-  }
-
-  Future<int> create(User user) async {
-    var connection = await _databaseHelper.connection;
-    var result = await connection.insert(
-      "Users",
-      user.toMap(),
-    );
-
-    return result;
   }
 
   Future<int> add(User user) async {

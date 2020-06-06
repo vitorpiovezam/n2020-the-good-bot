@@ -5,7 +5,9 @@ import 'package:college_backoffice/repository/database.dart';
 class ClassesRepository extends BaseRepository {
   DatabaseHelper _databaseHelper;
 
-  ClassesRepository() : super();
+  ClassesRepository() {
+    _databaseHelper = DatabaseHelper();
+  }
 
   Future<List<Class>> findAll() async {
     var connection = await _databaseHelper.connection;

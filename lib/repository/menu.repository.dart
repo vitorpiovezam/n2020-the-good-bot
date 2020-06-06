@@ -28,17 +28,16 @@ class MenuItem{
     };
 }
 
-class MenuRepository {
+class MenuRepository{
   DatabaseHelper _databaseHelper;
 
-  MenuRepository(){
+  MenuRepository() {
     _databaseHelper = new DatabaseHelper();
-
     create(new MenuItem(id: '1', label: 'logoff', screenpath: '/'));
     create(new MenuItem(id: '2', label: 'presença', screenpath: '/presence'));
     create(new MenuItem(id: '3', label: 'correção de prova', screenpath: '/tests-review'));
     create(new MenuItem(id: '4', label: 'considerações', screenpath: '/about'));
-  }
+  } 
 
   Future<List<MenuItem>> findAll() async {
     var connection = await _databaseHelper.connection;

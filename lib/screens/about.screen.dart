@@ -28,12 +28,12 @@ class _AboutScreenState extends State<AboutScreen> {
                     SizedBox(
                       height: 130.0,
                       child: Image.network(
-                        'https://media.glassdoor.com/sqll/1149004/fiap-squarelogo-1576755200976.png',
+                        'https://i.kym-cdn.com/photos/images/newsfeed/000/415/209/3b4.png',
                         fit: BoxFit.contain,
                       ),
                     ),
                     SizedBox(height: 35.0),
-                    Text("pega leve ai professor, foram 7h de trabalho pra fazer essa nac (nacs tem tempo de apliacaçao de 2h maximo em condicoes normais)"),
+                    Text("pega leve ai professor, foram 7h de trabalho pra fazer essa nac (nacs tem tempo de apliacaçao de 2h maximo em condicoes normais) e eu nem consegui fazer pois nao consegui implementar o singleton no databasehelper, quebra no segundo repository instanciado."),
                     SizedBox(height: 15.0),
                   ],
                 ),
