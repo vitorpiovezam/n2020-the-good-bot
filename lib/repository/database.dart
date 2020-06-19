@@ -14,68 +14,75 @@ class DatabaseHelper {
   DatabaseHelper._internal();
 
   Future<Database> get connection async {
-    if (_database == null) {
-      _database = await _createDatabase();
-    }
+    if (_database != null)
+    return _database;
+
+    _database = await initDB();
     return _database;
   }
 
-  Future<Database> _createDatabase() async {
+  initDB() async {
     String databasesPath = await getDatabasesPath();
-    String dbPath = join(databasesPath, 'college');
-
-    var database = await openDatabase(
-      dbPath,
-      version: 1,
-      onCreate: _createTables,
-    );
-
-    return database;
-  }
-
-  void _createTables(Database database, int version) async {
-    String script = '''
+    String path = join(databasesPath, 'college');
+    return await openDatabase(path, version: 1, onOpen: (db) {
+    }, onCreate: (Database db, int version) async {
+    await db.execute(
+        '''
     CREATE TABLE MenuItems (
       id TEXT PRIMARY KEY NOT NULL,
       label TEXT,
       screenpath TEXT
     );
+    ''');
 
-    CREATE TABLE Course (
+    await db.execute(
+        '''
+    CREATE TABLE Complaints (
       id TEXT PRIMARY KEY NOT NULL,
-      name TEXT,
-      studentsIds TEXT
+      type TEXT,
+      description TEXT,
+      address TEXT
     );
+    ''');
 
-    CREATE TABLE Users (
+    await db.execute(
+        '''
+    CREATE TABLE CovidCases (
       id TEXT PRIMARY KEY NOT NULL,
-      label TEXT,
-      screenpath TEXT,
-      coursesIds TEXT
+      country TEXT,
+      location TEXT,
+      infected TEXT
     );
+    ''');
 
-    CREATE TABLE Classes (
-      id TEXT PRIMARY KEY NOT NULL,
-      name TEXT,
-      courseId TEXT,
-      atendeesIds TEXT,
-      date TEXT,
-      initHour TEXT,
-      endHour TEXT
-    );
+    db.execute("INSERT INTO MenuItems VALUES('1', 'logoff', '/');");
+    db.execute("INSERT INTO MenuItems VALUES('2', 'numero de casos', '/cases');");
+    db.execute("INSERT INTO MenuItems VALUES('3', 'denuncia', '/complaint-new');");
+    db.execute("INSERT INTO MenuItems VALUES('4', 'BOT de Assistencia', '/bot');");
 
-    INSERT into Course VALUES('1', 'redes', '1,3,4');
-    INSERT into Course VALUES('2', 'xamarin', '3,4');
-    INSERT into Course VALUES('3', 'engenharia', '1,2');
-    INSERT into Course VALUES('4', 'big data', '1,4,3,2');
 
-    INSERT into Classes VALUES('1', 'Aula 01', '1', '', '20/07/2020', '13:30', '14:50');
-    INSERT into Classes VALUES('2', 'Aula 01', '2','', '20/07/2020', '14:50', '16:50');
-    INSERT into Classes VALUES('3', 'Aula 02', '3','' ,'21/07/2020', '14:50', '16:50');
-    INSERT into Classes VALUES('4', 'Aula 03', '3','', '22/07/2020', '14:50', '16:50');
-    INSERT into Classes VALUES('5', 'Aula 01', '4','', '22/07/2020', '18:50', '19:50');
-
-    ''';
-    await database.execute(script);
+    db.execute("INSERT INTO CovidCases VALUES('1', 'brazil', 'amazonas', '54.000');");
+    db.execute("INSERT INTO CovidCases VALUES('2', 'brazil', 'roraima', '6.800');");
+    db.execute("INSERT INTO CovidCases VALUES('3', 'brazil', 'pará', '69.000');");
+    db.execute("INSERT INTO CovidCases VALUES('4', 'brazil', 'amapa', '16.500');");
+    db.execute("INSERT INTO CovidCases VALUES('5', 'brazil', 'maranhao', '50.000');");
+    db.execute("INSERT INTO CovidCases VALUES('6', 'brazil', 'piaui', '10.153');");
+    db.execute("INSERT INTO CovidCases VALUES('7', 'brazil', 'ceara', '76.000');");
+    db.execute("INSERT INTO CovidCases VALUES('8', 'brazil', 'rio grande do norte', '14.171');");
+    db.execute("INSERT INTO CovidCases VALUES('9', 'brazil', 'paraiba', '28.000');");
+    db.execute("INSERT INTO CovidCases VALUES('10', 'brazil', 'ceara', '45.261');");
+    db.execute("INSERT INTO CovidCases VALUES('11', 'brazil', 'alagoas', '22.200');");
+    db.execute("INSERT INTO CovidCases VALUES('12', 'brazil', 'sergipe', '13.000');");
+    db.execute("INSERT INTO CovidCases VALUES('13', 'brazil', 'rondonia', '13.000');");
+    db.execute("INSERT INTO CovidCases VALUES('14', 'brazil', 'acre', '11.000');");
+    db.execute("INSERT INTO CovidCases VALUES('15', 'brazil', 'sao paulo', '178.000');");
+    db.execute("INSERT INTO CovidCases VALUES('16', 'brazil', 'goias', '7.000');");
+    db.execute("INSERT INTO CovidCases VALUES('17', 'brazil', 'espirito santo', '26.000');");
+    db.execute("INSERT INTO CovidCases VALUES('18', 'brazil', 'rio de janeiro', '79.000');");
+    db.execute("INSERT INTO CovidCases VALUES('19', 'brazil', 'mato grosso do sul', '3.400');");
+    db.execute("INSERT INTO CovidCases VALUES('20', 'brazil', 'parana', '14.000');");
+    db.execute("INSERT INTO CovidCases VALUES('21', 'brazil', 'santa catarina', '13.000');");
+    db.execute("INSERT INTO CovidCases VALUES('22', 'brazil', 'rio grande do sul', '14. d600');");
+  });
   }
 }

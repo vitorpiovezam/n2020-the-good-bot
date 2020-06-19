@@ -1,4 +1,4 @@
-import 'package:college_backoffice/repository/menu.repository.dart';
+import 'package:n2020_the_good_bot/repository/menu.repository.dart';
 
 class MenuService {
   MenuRepository _menuRepository;

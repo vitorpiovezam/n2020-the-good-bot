@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:college_backoffice/repository/database.dart';
+import 'package:n2020_the_good_bot/repository/database.dart';
 
 class MenuItem{
   String id;
@@ -32,11 +32,7 @@ class MenuRepository{
   DatabaseHelper _databaseHelper;
 
   MenuRepository() {
-    _databaseHelper = new DatabaseHelper();
-    create(new MenuItem(id: '1', label: 'logoff', screenpath: '/'));
-    create(new MenuItem(id: '2', label: 'presença', screenpath: '/presence'));
-    create(new MenuItem(id: '3', label: 'correção de prova', screenpath: '/tests-review'));
-    create(new MenuItem(id: '4', label: 'considerações', screenpath: '/about'));
+    _databaseHelper = new DatabaseHelper();  
   } 
 
   Future<List<MenuItem>> findAll() async {

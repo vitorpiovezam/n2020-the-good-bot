@@ -1,14 +1,14 @@
-import 'package:n2020_the_good_bot/repository/menu.repository.dart';
-import 'package:n2020_the_good_bot/service/menu.service.dart';
+import 'package:n2020_the_good_bot/definitions/case.model.dart';
+import 'package:n2020_the_good_bot/service/cases.service.dart';
 import 'package:flutter/material.dart';
 
-class PresenceScreen extends StatefulWidget {
+class CasesScreen extends StatefulWidget {
   @override
-  _PresenceScreenState createState() => _PresenceScreenState();
+  _CasesScreenState createState() => _CasesScreenState();
 }
 
-class _PresenceScreenState extends State<PresenceScreen> {
- final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+class _CasesScreenState extends State<CasesScreen> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool selected = false;
 
   @override
@@ -16,23 +16,20 @@ class _PresenceScreenState extends State<PresenceScreen> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          opacity: 0,
-        ),
         backgroundColor: Colors.blue,
-        title: Text("Menu"),
+        title: Text("Numero de casos"),
       ),
       body: FutureBuilder<List>(
         //future: cursoRepository.findAll(),
-        future: new MenuService().getMenuItems(),
+        future: new CasesService().getAll(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             String erroMessage = snapshot.error.toString();
             return Center(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
-                    'Erro ao carregar a lista de cursos. \n Detalhes: $erroMessage'),
+                    'Erro ao carregar os casos. \n Detalhes: $erroMessage'),
               ),
             );
           } else {
@@ -41,7 +38,7 @@ class _PresenceScreenState extends State<PresenceScreen> {
                 return buildGridView(snapshot.data);
               } else {
                 return Center(
-                  child: Text("Nenhum curso cadastrado!"),
+                  child: Text("Nenhum caso de covid <3"),
                 );
               }
             } else {
@@ -61,22 +58,21 @@ final rmController = TextEditingController();
 final passwordController = TextEditingController();
 
 
-GridView buildGridView(List<MenuItem> itens) {
+GridView buildGridView(List<Case> itens) {
   return GridView.count(
       crossAxisCount: 2,
       mainAxisSpacing: 10,
-      crossAxisSpacing: 10,
+      crossAxisSpacing: 3.0,
       childAspectRatio: 3,
       children: itens.map((value) {
         return FlatButton(
           color: Colors.blue,
-          padding: EdgeInsets.all(26.0),
+          padding: EdgeInsets.all(10.0),
           onPressed: () async {
-            await Navigator.pushNamed(context, value.screenpath);
           },
           child: Text(
-            value.label,
-            style: TextStyle(fontSize: 14.0),
+            (value.location + "\n" + value.infected),
+            style: TextStyle(fontSize: 15.0),
           ),
         );
       }).toList(),

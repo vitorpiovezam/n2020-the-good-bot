@@ -1,8 +1,8 @@
-import 'package:college_backoffice/screens/about.screen.dart';
-import 'package:college_backoffice/screens/login.screen.dart';
-import 'package:college_backoffice/screens/login.screen.dart';
-import 'package:college_backoffice/screens/menu.screen.dart';
-import 'package:college_backoffice/screens/presence.screen.dart';
+import 'package:n2020_the_good_bot/screens/cases.screen.dart';
+import 'package:n2020_the_good_bot/screens/complaint/list.screen.dart';
+import 'package:n2020_the_good_bot/screens/complaint/new.screen.dart';
+import 'package:n2020_the_good_bot/screens/login.screen.dart';
+import 'package:n2020_the_good_bot/screens/menu.screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,8 +22,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginScreen(),
         '/home_screen': (context) => MenuScreen(),
-        '/presence': (context) => PresenceScreen(),
-        '/about': (context) => AboutScreen(),
+        '/complaint-new': (context) => NewComplaintScreen(),
+        '/complaint-list': (context) => ComplaintListScreen(),
+        '/complaint-detail': (context) => NewComplaintScreen(),
+        '/cases': (context) => CasesScreen(),
+        //'/bot': (context) => AboutScreen(),
       },
     );
   }

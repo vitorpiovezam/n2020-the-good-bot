@@ -1,4 +1,4 @@
-import 'package:college_backoffice/repository/database.dart';
+import 'package:n2020_the_good_bot/repository/database.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class BaseRepository {
