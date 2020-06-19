@@ -11,4 +11,10 @@ class ComplaintService {
   Future<List<Complaint>> getAll() {
     return this._complaintRepository.findAll();
   }
+
+  Future<int> create(Complaint copmplaint) {
+    return this._complaintRepository.create(copmplaint);
+  }
+
+
 }

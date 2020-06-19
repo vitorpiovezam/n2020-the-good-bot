@@ -31,7 +31,7 @@ class ComplaintRepository{
   Future<int> create(Complaint complaint) async {
     var connection = await _databaseHelper.connection;
     var result = await connection.insert(
-      "Complaint",
+      "Complaints",
       complaint.toMap(),
     );
 

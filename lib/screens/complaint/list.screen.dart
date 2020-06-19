@@ -1,4 +1,4 @@
-import 'package:n2020_the_good_bot/repository/menu.repository.dart';
+import 'package:n2020_the_good_bot/definitions/complaint.model.dart';
 import 'package:n2020_the_good_bot/service/complaint.service.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class _ComplaintListScreenState extends State<ComplaintListScreen> {
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text("Menu"),
+        title: Text("Minhas denuncias"),
       ),
       body: FutureBuilder<List>(
         //future: cursoRepository.findAll(),
@@ -58,7 +58,7 @@ final rmController = TextEditingController();
 final passwordController = TextEditingController();
 
 
-GridView buildGridView(List<MenuItem> itens) {
+GridView buildGridView(List<Complaint> itens) {
   return GridView.count(
       crossAxisCount: 2,
       mainAxisSpacing: 10,
@@ -69,10 +69,9 @@ GridView buildGridView(List<MenuItem> itens) {
           color: Colors.blue,
           padding: EdgeInsets.all(10.0),
           onPressed: () async {
-            await Navigator.pushNamed(context, value.screenpath);
           },
           child: Text(
-            value.label,
+            value.description,
             style: TextStyle(fontSize: 20.0),
           ),
         );

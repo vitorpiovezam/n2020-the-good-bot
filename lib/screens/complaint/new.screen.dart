@@ -1,5 +1,7 @@
+import 'package:n2020_the_good_bot/definitions/complaint.model.dart';
+import 'package:n2020_the_good_bot/service/complaint.service.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:math';
 class NewComplaintScreen extends StatefulWidget {
   @override
   _NewComplaintScreenState createState() => _NewComplaintScreenState();
@@ -11,6 +13,11 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String teste = "";
+
+  final complaintService = ComplaintService();
+  final typeController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +44,7 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
                     new TextFormField(
                       decoration: const InputDecoration(labelText: 'Tipo (denuncia/aglomeracao)'),
                       keyboardType: TextInputType.text,
+                      controller: typeController,
                       validator: (String arg) {
                         if (arg.length < 5)
                           return 'Deve ter mais de 5 caracteres';
@@ -51,6 +59,7 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
                     new TextFormField(
                       decoration: const InputDecoration(labelText: 'Descrição'),
                       keyboardType: TextInputType.text,
+                      controller: descriptionController,
                       validator: (String arg) {
                         if (arg.length < 10)
                           return 'Deve ter mais de 10 caracteres';
@@ -65,6 +74,7 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
                     new TextFormField(
                       decoration: const InputDecoration(labelText: 'Endereco'),
                       keyboardType: TextInputType.text,
+                      controller: addressController,
                       validator: (String arg) {
                         if (arg.length < 10)
                           return 'Deve ter mais de 10 caracteres';
@@ -85,7 +95,14 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
                         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            showSucessDialog(context);
+                            await complaintService.create(
+                              (new Complaint(
+                                id: new Random().nextInt(1000000 - 10).toString(),
+                                type: typeController.text,
+                                description: descriptionController.text,
+                                address: addressController.text)
+                              ));
+                            showSucessDialog(context, typeController);
                           }
                         },
                         child: Text("Cadastrar denuncia",
@@ -129,7 +146,7 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
 
 
 
-showSucessDialog(BuildContext context) { 
+showSucessDialog(BuildContext context, controller) { 
   Widget okButton = FlatButton(
     child: Text("OK"),
     onPressed: () { 
@@ -137,7 +154,7 @@ showSucessDialog(BuildContext context) {
     },
   );
   AlertDialog alerta = AlertDialog(
-    title: Text("Cadastrado com sucesso"),
+    title: Text("Denuncia sobre " + controller.text + " criada com sucesso"),
     actions: [
       okButton,
     ],
